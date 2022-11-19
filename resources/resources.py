@@ -2,7 +2,7 @@ import ast
 import math
 from json import loads
 from flask_cors import cross_origin
-from flask import request, Response, jsonify, json
+from flask import request, Response, json
 from flask_restful import Resource, request
 from common.utils import get_random_chiste, generate_new_id_to_collection, ChistesCollection
 
@@ -30,7 +30,6 @@ class Chistes(Resource):
             return Response(json.dumps(['Error: {}'.format(e)]), status=400, mimetype=RESPONSE_MIMETYPE)
 
     def post(self):
-        # guardará en una base de datos el chiste (texto pasado por parámetro)
         try:
             data_return = None
             if request.json:
@@ -50,7 +49,6 @@ class Chistes(Resource):
             return Response(json.dumps(['Error: {}'.format(e)]), status=400, mimetype=RESPONSE_MIMETYPE)
 
     def put(self):
-        # actualiza el chiste con el nuevo texto sustituyendo al chiste indicado en el parámetro “number”
         try:
             data_return = None
             if request.json:
@@ -70,7 +68,6 @@ class Chistes(Resource):
             return Response(json.dumps(['Error: {}'.format(e)]), status=400, mimetype=RESPONSE_MIMETYPE)
 
     def delete(self):
-        # elimina el chiste indicado en el parametro number
         try:
             data_return = None
             args_keys = request.args.keys()

@@ -1,6 +1,6 @@
-# Reto Swuadmarkers
+# Reto Squadmarkers
 
-_API Rest creada con el lenguaje Python, el Framework Flask Restful la cual es la encargada de retornar chistes desde el consumo de dos diferentes EndPoints, realiza acciones de crear un chiste en una base de datos de MongoDB, actualiza chistes en la base de datos de MongoDB, elimina chistes desde la base de datos de MongoDB y realiza calculos matemáticos en base a el valor ingresado._
+_API Rest creada con el lenguaje Python, el Framework Flask Restful la cual es la encargada de retornar chistes desde el consumo de dos diferentes EndPoints, realiza acciones de crear un chiste en una base de datos de MongoDB, actualiza chistes en la base de datos de MongoDB, elimina chistes desde la base de datos de MongoDB y realiza cálculos matemáticos en base a el valor ingresado._
 
 ### Prerequisitos 📋
 
