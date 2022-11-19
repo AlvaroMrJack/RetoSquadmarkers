@@ -1,13 +1,16 @@
 import ast
 import math
 from json import loads
-from flask import request, Response
+from flask_cors import cross_origin
+from flask import request, Response, jsonify, json
 from flask_restful import Resource, request
 from common.utils import get_random_chiste, generate_new_id_to_collection, ChistesCollection
 
 from config import LIST_POSSIBLE_VALUES, RESPONSE_MIMETYPE
 
 class Chistes(Resource):
+
+    @cross_origin()
     def get(self, path_param = None):
         try:
             data_return = None
@@ -20,11 +23,11 @@ class Chistes(Resource):
                 data_return = get_random_chiste(path_param)
             else:
                 data_return = 'El valor ingresado ´{}´ es incorrecto. Este valor debe ser {} o {}.'.format(path_param, '“Chuck”', '“Dad”')
-                return Response(data_return, status=400, mimetype=RESPONSE_MIMETYPE)
+                return Response(json.dumps([data_return]), status=400, mimetype=RESPONSE_MIMETYPE)
 
-            return Response(data_return, status=200, mimetype=RESPONSE_MIMETYPE)
+            return Response(json.dumps([data_return]), status=200, mimetype=RESPONSE_MIMETYPE)
         except Exception as e:
-            return Response('Error: {}'.format(e), status=400, mimetype=RESPONSE_MIMETYPE)
+            return Response(json.dumps(['Error: {}'.format(e)]), status=400, mimetype=RESPONSE_MIMETYPE)
 
     def post(self):
         # guardará en una base de datos el chiste (texto pasado por parámetro)
@@ -42,9 +45,9 @@ class Chistes(Resource):
             else:
                 data_return = 'El objeto de entrada debe ser tipo JSON.'
                 
-            return Response(data_return, status=200, mimetype=RESPONSE_MIMETYPE)
+            return Response(json.dumps([data_return]), status=200, mimetype=RESPONSE_MIMETYPE)
         except Exception as e:
-            return Response('Error: {}'.format(e), status=400, mimetype=RESPONSE_MIMETYPE)
+            return Response(json.dumps(['Error: {}'.format(e)]), status=400, mimetype=RESPONSE_MIMETYPE)
 
     def put(self):
         # actualiza el chiste con el nuevo texto sustituyendo al chiste indicado en el parámetro “number”
@@ -62,27 +65,27 @@ class Chistes(Resource):
                     data_return = 'El objeto de entrada no tiene la key ´number´'
             else:
                 data_return = 'El objeto de entrada debe ser tipo JSON.'
-            return Response(data_return, status=200, mimetype=RESPONSE_MIMETYPE)
+            return Response(json.dumps([data_return]), status=200, mimetype=RESPONSE_MIMETYPE)
         except Exception as e:
-            return Response('Error: {}'.format(e), status=400, mimetype=RESPONSE_MIMETYPE)
+            return Response(json.dumps(['Error: {}'.format(e)]), status=400, mimetype=RESPONSE_MIMETYPE)
 
     def delete(self):
         # elimina el chiste indicado en el parametro number
         try:
             data_return = None
-            if request.json:
-                request_data = loads(request.data)
-                if 'number' in [*request_data.keys()]:
-                    ChistesCollection.objects.get(number=request_data['number']).delete()
-                    data_return = 'El chiste número ´{}´ fue eliminado con éxito!'.format(request_data['number'])
-                else:
-                    data_return = 'El objeto de entrada no tiene la key ´number´'
-            else:
-                data_return = 'El objeto de entrada debe ser tipo JSON.'
+            args_keys = request.args.keys()
+            args_values = request.args
 
-            return Response(data_return, status=200, mimetype=RESPONSE_MIMETYPE)
+            if 'number' in [*args_keys]:
+                number = int(args_values['number'])
+                ChistesCollection.objects.get(number=number).delete()
+                data_return = 'El chiste número ´{}´ fue eliminado con éxito!'.format(number)
+            else:
+                return Response('Query param no válido', status=400, mimetype=RESPONSE_MIMETYPE)
+
+            return Response(json.dumps([data_return]), status=200, mimetype=RESPONSE_MIMETYPE)
         except Exception as e:
-            return Response('Error: {}'.format(e), status=400, mimetype=RESPONSE_MIMETYPE)
+            return Response(json.dumps(['Error: {}'.format(e)]), status=404, mimetype=RESPONSE_MIMETYPE)
 
 
 class Calculos(Resource):
@@ -110,6 +113,6 @@ class Calculos(Resource):
             else:
                 return Response('Query param no válido', status=400, mimetype=RESPONSE_MIMETYPE)
 
-            return Response(str(data_return), status=200, mimetype=RESPONSE_MIMETYPE)
+            return Response(json.dumps([data_return]), status=200, mimetype=RESPONSE_MIMETYPE)
         except Exception as e:
-            return Response('Error: {}'.format(e), status=400, mimetype=RESPONSE_MIMETYPE)
+            return Response(json.dumps(['Error: {}'.format(e)]), status=400, mimetype=RESPONSE_MIMETYPE)

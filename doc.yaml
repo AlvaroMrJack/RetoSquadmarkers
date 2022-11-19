@@ -1,0 +1,224 @@
+openapi: 3.0.3
+info:
+  title: Reto Squadmarkers
+  description: |-
+    Documentación creada para los Enpoint desarrollados para Squadmarkers
+  termsOfService: http://swagger.io/terms/
+  contact:
+    email: alvaro.12tobar@gmail.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+servers:
+  - url: http://localhost:5000/v1
+tags:
+  - name: ENPOINT DE CHISTES
+    description: Se entregan chistes aleatoriamente dependiendo de parámetros de entrada
+  - name: ENDPOINT MATEMÁTICO
+    description: Se calcula el mínimo común múltiplo o se entrega el resultado de un valor ingresado + 1
+paths:
+  /chistes:
+    get:
+      tags:
+        - ENPOINT DE CHISTES
+      summary: Entrega un chiste al azar
+      description: Entrega al azar un chiste desde dos diferentes Endpoints de chistes.
+      operationId: chistes
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Chiste'
+        '400':
+          description: Invalid status value
+  /chistes/{path_param}:
+    get:
+      tags:
+        - ENPOINT DE CHISTES
+      summary: Entrega un chiste dependiendo del valor ingresado
+      description: Entrega un chiste desde diferentes APIs dependiendo del valor ingresado.
+      operationId: chistes_path_param
+      parameters:
+        - name: path_param
+          in: path
+          description: Valor string que define cual API consumir
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Chiste'
+        '400':
+          description: Invalid status value
+  /post_chiste:
+    post:
+      tags:
+        - ENPOINT DE CHISTES
+      summary: Crea un chiste en la base de datos
+      description: Crea un chiste en la base de datos con el valor ingresado
+      operationId: post_chiste
+      requestBody:
+        description: Crea un chiste en la base de datos
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostChiste'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponsePostChiste'
+        '400':
+          description: Invalid input
+  /update_chiste:
+    put:
+      tags:
+        - ENPOINT DE CHISTES
+      summary: Actualiza un chiste
+      description: Actualiza un chiste a partir del number del chiste y el nuevo chiste.
+      operationId: update_chiste
+      requestBody:
+        description: Actualiza un chiste de la base de datos
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateChiste'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseUpdateChiste'
+        '400':
+          description: Invalid input
+  /delete_chiste:
+    delete:
+      tags:
+        - ENPOINT DE CHISTES
+      summary: Elimina un chiste
+      description: Elimina un chiste a partir del número indetificador entregado.
+      operationId: delete_chiste
+      parameters:
+        - in: query
+          name: number
+          required: true
+          description: Número entero
+          schema:
+            type: integer
+            example: 10
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ResponseDeleteChiste'
+        '400':
+          description: Invalid status value
+  /calculo_mcm:
+    get:
+      tags:
+        - ENDPOINT MATEMÁTICO
+      summary: Entrega el mínimo común múltiplo de un listado de enteros
+      description: Recibe un listado de enteros y para todos ellos se calcula su mínimo común múltiplo.
+      operationId: calculo_mcm
+      parameters:
+        - in: query
+          name: numbers
+          required: true
+          description: Lista de números enteros
+          schema:
+            type: string
+            example: '[1,2,3,4]'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MCM'
+        '400':
+          description: Invalid status value
+  /calculo_mas_uno:
+    get:
+      tags:
+        - ENDPOINT MATEMÁTICO
+      summary: Entrega el resultado de una suma
+      description: Recibe un número entero y se retorna el número entero + 1.
+      operationId: calculo_mas_uno
+      parameters:
+        - in: query
+          name: number
+          required: true
+          description: Número entero
+          schema:
+            type: integer
+            example: 10
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Number'
+        '400':
+          description: Invalid status value
+components:
+  schemas:
+    Chiste:
+      type: string
+      example: que le dijo un pez a otro pez.. nada
+    MCM:
+      type: integer
+      example: 11
+    Number:
+      type: integer
+      example: 11
+    PostChiste:
+      type: object
+      format: json
+      properties:
+        chiste_texto:
+          type: string
+          example: Nuevo Chiste desde Swagger
+    ResponsePostChiste:
+      type: string
+      example: El chiste ´{}´ fue creado con éxito!
+    UpdateChiste:
+      type: object
+      format: json
+      properties:
+        number:
+          type: integer
+          example: 1
+        chiste_texto:
+          type: string
+          example: Chiste actualizado desde Swagger
+    ResponseUpdateChiste:
+      type: string
+      example: El chiste número ´{}´ fue actualizado con éxito con el siguiente chiste:´{}´
+    ResponseDeleteChiste:
+      type: string
+      example: El chiste número ´{}´ fue eliminado con éxito!

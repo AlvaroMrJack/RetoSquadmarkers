@@ -5,10 +5,11 @@ cosas por hacer
 
 - crear repo en github                                                      LISTO
 - estructura del proyecto Flask RESTFULL                                    LISTO
-- modelo de datos sql y no sql                                              FALTA
 - creacion de base, entender mongodb, se usan colecciones en vez de tablas  LISTO
-- pruebas unitarias                                                         CASI
-- creacion documentacion con archivo yaml                                   FALTA
+- pruebas unitarias                                                         LISTO
+- creacion documentacion con archivo yaml                                   LISTO
+- modelo de datos sql y no sql                                              FALTA
+- deadme                                                                    FALTA
 
 
 2:
