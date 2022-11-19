@@ -22,7 +22,7 @@ class Chistes(Resource):
             elif path_param == LIST_POSSIBLE_VALUES[1]:
                 data_return = get_random_chiste(path_param)
             else:
-                data_return = 'El valor ingresado ´{}´ es incorrecto. Este valor debe ser {} o {}.'.format(path_param, '“Chuck”', '“Dad”')
+                data_return = 'El valor ingresado {} es incorrecto. Este valor debe ser {} o {}.'.format(path_param, 'Chuck', 'Dad')
                 return Response(json.dumps([data_return]), status=400, mimetype=RESPONSE_MIMETYPE)
 
             return Response(json.dumps([data_return]), status=200, mimetype=RESPONSE_MIMETYPE)
@@ -39,9 +39,9 @@ class Chistes(Resource):
                     new_id = generate_new_id_to_collection()
                     chiste = request_data['chiste_texto']
                     nuevo_chiste = ChistesCollection(number=new_id, chiste_texto=chiste).save()
-                    data_return = 'El chiste ´{}´ fue creado con éxito!'.format(chiste)
+                    data_return = 'El chiste {} fue creado con exito!'.format(chiste)
                 else:
-                    data_return = 'Se debe enviar un objeto tipo JSON en el body de la petición con la key ´chiste_texto´.'
+                    data_return = 'Se debe enviar un objeto tipo JSON en el body de la petición con la key chiste_texto.'
             else:
                 data_return = 'El objeto de entrada debe ser tipo JSON.'
                 
@@ -58,11 +58,11 @@ class Chistes(Resource):
                 if 'number' in [*request_data.keys()]:
                     if 'chiste_texto' in [*request_data.keys()]:
                         ChistesCollection.objects.get(number=request_data['number']).update(chiste_texto=request_data['chiste_texto'])
-                        data_return = 'El chiste número ´{}´ fue actualizado con éxito con el siguiente chiste: ´{}´'.format(request_data['number'], request_data['chiste_texto'])
+                        data_return = 'El chiste número {} fue actualizado con exito con el siguiente chiste: {}'.format(request_data['number'], request_data['chiste_texto'])
                     else:
-                        data_return = 'El objeto de entrada no tiene la key ´chiste_texto´'
+                        data_return = 'El objeto de entrada no tiene la key chiste_texto'
                 else:
-                    data_return = 'El objeto de entrada no tiene la key ´number´'
+                    data_return = 'El objeto de entrada no tiene la key number'
             else:
                 data_return = 'El objeto de entrada debe ser tipo JSON.'
             return Response(json.dumps([data_return]), status=200, mimetype=RESPONSE_MIMETYPE)
@@ -79,7 +79,7 @@ class Chistes(Resource):
             if 'number' in [*args_keys]:
                 number = int(args_values['number'])
                 ChistesCollection.objects.get(number=number).delete()
-                data_return = 'El chiste número ´{}´ fue eliminado con éxito!'.format(number)
+                data_return = 'El chiste número {} fue eliminado con exito!'.format(number)
             else:
                 return Response('Query param no válido', status=400, mimetype=RESPONSE_MIMETYPE)
 
