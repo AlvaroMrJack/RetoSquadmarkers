@@ -6,12 +6,12 @@ _API Rest creada con el lenguaje Python, el Framework Flask Restful la cual es l
 
 _Que se necesita para lanzar la API?_
 
+- Cliente Git para clonar repositorio
 - Python (current latest version: 3.11.0)
 - Instalador de paquetes PIP (es recomendable habilitar la instalación de PIP al momento de instalar Python en el SO)
 - Base de datos local MongoDB
-- Instalar módulos necesarios para la API (módulos establecidos en documento requirements.txt)
+- Instalar módulos necesarios para la API (módulos establecidos en documento [requirements.txt](requirements.txt))
 - Cliente Postman para realizar pruebas de los EndPoints (Opcional)
-- Cliente Git para clonar repositorio
 
 
 ### Como instalar 🔧
