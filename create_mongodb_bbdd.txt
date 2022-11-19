@@ -1,0 +1,4 @@
+
+use RetoDB
+
+db.chistes_collection.insertOne({"number": 1, "chiste_texto": "Nuevo chiste"})
