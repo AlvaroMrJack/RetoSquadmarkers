@@ -1,12 +1,15 @@
 .DS_Store
 .env
+.venv
 .flaskenv
 *.pyc
 *.pyo
 env/
 venv/
+venv/
 .venv/
 env*
+venv*
 dist/
 build/
 *.egg
