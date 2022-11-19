@@ -1,0 +1,17 @@
+
+
+
+cosas por hacer
+
+- crear repo en github                                                      LISTO
+- estructura del proyecto Flask RESTFULL                                    (FALTA ORDENAR UN POCO)
+- modelo de datos sql y no sql                                              FALTA
+- creacion de base, entender mongodb, se usan colecciones en vez de tablas  LISTO
+- pruebas unitarias                                                         FALTA
+- creacion documentacion con archivo yaml                                   FALTA
+
+
+2:
+2.1 - Para el caso de uso de datos con tipo de dato semi estructurado como lo es el tipo JSON, que para este caso es el tipo de datos que entregan los endpoint de chistes a consumir, la mejor opción es utilizar un repositorio MongoDB ya que es el indicado para poder utilizar tipos de datos como lo es el JSON.
+
+Para este caso de uso, donde los datos entregados por las APIs de chistes a consumir son del tipo JSON, la mejor opción es utilizar un repositorio de MongoDB ya que al ser una base de datos NoSQL entrega un escalamiento horizontal y el soporte para data no estructurada.
